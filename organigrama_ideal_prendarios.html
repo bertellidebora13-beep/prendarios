@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: Arial, sans-serif; background: #f0f4fa; padding: 32px; }
+h2 { text-align: center; color: #1B3A6B; font-size: 17px; margin-bottom: 4px; }
+p.sub { text-align: center; color: #777; font-size: 11px; margin-bottom: 30px; }
+
+.org { display: flex; flex-direction: column; align-items: center; }
+
+.box {
+  border-radius: 9px; padding: 11px 15px; text-align: center;
+  min-width: 148px; max-width: 168px;
+}
+.box .role { font-size: 9.5px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 3px; opacity: 0.82; }
+.box .name { font-size: 12.5px; font-weight: bold; line-height: 1.3; }
+.box .desc { font-size: 9px; margin-top: 5px; line-height: 1.4; opacity: 0.88; }
+.box .tag  { font-size: 9px; margin-top: 4px; border-radius: 4px; padding: 2px 6px; display: inline-block; }
+
+.dir  { background: #1B3A6B; color: #fff; }
+.dir .tag { background: rgba(255,255,255,0.18); color: #fff; }
+.com  { background: #2E5FA3; color: #fff; }
+.com .tag  { background: rgba(255,255,255,0.2); color: #fff; }
+.ops  { background: #4A90D9; color: #fff; }
+.ops .tag  { background: rgba(255,255,255,0.2); color: #fff; }
+.adm  { background: #1E7FAB; color: #fff; }
+.adm .tag  { background: rgba(255,255,255,0.2); color: #fff; }
+.ext  { background: #fff; color: #555; border: 2px dashed #aaa; }
+.ext .role { color: #888; opacity:1; }
+.ext .tag  { background: #F3F3F3; color: #777; }
+
+.canal { font-size: 9px; font-weight: bold; background: #E3EDFB; color: #1B3A6B;
+  border-radius: 4px; padding: 2px 6px; margin-top: 5px; display: inline-block; }
+
+.v     { width: 2px; height: 28px; background: #2E5FA3; }
+.v-ops { width: 2px; height: 28px; background: #4A90D9; }
+.v-adm { width: 2px; height: 28px; background: #1E7FAB; }
+.v-com { width: 2px; height: 28px; background: #2E5FA3; }
+
+.split {
+  display: flex; gap: 36px; align-items: flex-start;
+  position: relative; padding-top: 28px;
+}
+.split::before {
+  content:''; position:absolute; top:0; height:2px; background:#2E5FA3;
+  left:50%; transform:translateX(-50%); width:var(--w, 400px);
+}
+.split-ops {
+  display: flex; gap: 36px; align-items: flex-start;
+  position: relative; padding-top: 28px;
+}
+.split-ops::before {
+  content:''; position:absolute; top:0; height:2px; background:#4A90D9;
+  left:50%; transform:translateX(-50%); width:var(--w, 400px);
+}
+.split-adm {
+  display: flex; gap: 36px; align-items: flex-start;
+  position: relative; padding-top: 28px;
+}
+.split-adm::before {
+  content:''; position:absolute; top:0; height:2px; background:#1E7FAB;
+  left:50%; transform:translateX(-50%); width:var(--w, 300px);
+}
+.col { display: flex; flex-direction: column; align-items: center; }
+
+.note {
+  margin-top: 28px; background: #E8F0FD; border:1px solid #B3C8F0;
+  border-radius: 8px; padding: 12px 20px; max-width: 860px;
+  font-size: 11.5px; color: #1B3A6B; line-height: 1.7; text-align:center;
+}
+.note strong { color: #1B3A6B; }
+
+.legend { display:flex; gap:18px; justify-content:center; flex-wrap:wrap;
+  margin-top:28px; padding-top:16px; border-top:1px solid #cdd8e8; }
+.li { display:flex; align-items:center; gap:6px; font-size:11px; color:#555; }
+.ld { width:13px; height:13px; border-radius:3px; flex-shrink:0; }
+</style>
+</head>
+<body>
+
+<h2>Organigrama Ideal — Empresa de Créditos Prendarios</h2>
+<p class="sub">Estructura desde cero · Sin condicionamiento al equipo existente</p>
+
+<div class="org">
+
+  <!-- DIRECCIÓN GENERAL -->
+  <div class="box dir">
+    <div class="role">Dirección General</div>
+    <div class="name">Director / Gerente General</div>
+    <div class="desc">Estrategia, decisiones de negocio, relación con inversores</div>
+  </div>
+  <div class="v"></div>
+
+  <!-- 3 GERENCIAS -->
+  <div class="split" style="--w:640px;">
+
+    <!-- GERENCIA COMERCIAL -->
+    <div class="col">
+      <div class="box com">
+        <div class="role">Gerencia Comercial</div>
+        <div class="name">Gerente Comercial</div>
+        <div class="desc">Estrategia de captación y canales de venta</div>
+      </div>
+      <div class="v-com"></div>
+      <div class="split" style="--w:180px; gap:16px;">
+        <div class="col">
+          <div class="v-com"></div>
+          <div class="box com">
+            <div class="role">Ejecutivo B2B</div>
+            <div class="name">Ejecutivo Concesionarias</div>
+            <span class="canal">🏪 Canal Concesionarias</span>
+            <div class="desc">Captación y fidelización de concesionarias aliadas</div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="v-com"></div>
+          <div class="box com">
+            <div class="role">Ejecutivo B2C</div>
+            <div class="name">Ejecutivo Clientes</div>
+            <span class="canal">👤 Canal Directo</span>
+            <div class="desc">Atención y captación de clientes directos</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GERENCIA DE OPERACIONES Y CRÉDITO -->
+    <div class="col">
+      <div class="box ops">
+        <div class="role">Gerencia de Operaciones</div>
+        <div class="name">Gerente de Operaciones</div>
+        <div class="desc">Supervisión del proceso de otorgamiento end-to-end</div>
+      </div>
+      <div class="v-ops"></div>
+      <div class="split-ops" style="--w:480px; gap:16px;">
+
+        <div class="col">
+          <div class="v-ops"></div>
+          <div class="box ops">
+            <div class="role">Análisis Crediticio</div>
+            <div class="name">Analista de Crédito</div>
+            <div class="desc">Evaluación de solicitudes, Veraz/Nosis, tasación, decisión</div>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="v-ops"></div>
+          <div class="box ops">
+            <div class="role">Gestoría Automotor</div>
+            <div class="name">Gestor / Mandatario</div>
+            <div class="desc">Informe dominio, VPA, inscripción de prenda, libre deuda</div>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="v-ops"></div>
+          <div class="box ops">
+            <div class="role">Carga y Seguimiento</div>
+            <div class="name">Operador de Créditos</div>
+            <div class="desc">Alta de créditos, cuotas, vencimientos, mora</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- GERENCIA ADMINISTRATIVA Y FINANCIERA -->
+    <div class="col">
+      <div class="box adm">
+        <div class="role">Gerencia Adm. y Financiera</div>
+        <div class="name">Gerente Adm. Financiero</div>
+        <div class="desc">Liquidaciones, fondos, contabilidad y cumplimiento</div>
+      </div>
+      <div class="v-adm"></div>
+      <div class="split-adm" style="--w:200px; gap:16px;">
+
+        <div class="col">
+          <div class="v-adm"></div>
+          <div class="box adm">
+            <div class="role">Liquidación y Cobros</div>
+            <div class="name">Liquidador</div>
+            <div class="desc">Concesionarias, cuotas, desembolsos y cobranza</div>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="v-adm"></div>
+          <div class="box adm">
+            <div class="role">Contabilidad</div>
+            <div class="name">Contador / Externo</div>
+            <div class="desc">Impuestos, estados contables, AFIP</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- SERVICIOS EXTERNOS -->
+  <div style="margin-top:36px; display:flex; gap:20px; justify-content:center;">
+    <div class="box ext">
+      <div class="role">Externo</div>
+      <div class="name">Asesoría Legal</div>
+      <div class="tag">Contratos prendarios · Ejecución</div>
+    </div>
+    <div class="box ext">
+      <div class="role">Externo</div>
+      <div class="name">Aseguradora</div>
+      <div class="tag">Endoso · Seguro automotor</div>
+    </div>
+    <div class="box ext">
+      <div class="role">Externo</div>
+      <div class="name">Veraz / Nosis</div>
+      <div class="tag">Consulta crediticia</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="note">
+  <strong>Estructura mínima viable:</strong> 8 personas internas + 3 servicios externos tercerizados.<br>
+  En etapa de lanzamiento, los roles de <strong>Gerente Comercial y Gerente de Operaciones</strong> pueden ser absorbidos temporalmente por la Dirección General para reducir costos fijos.<br>
+  El <strong>Gestor Automotor</strong> puede tercerizarse al inicio y luego internalizarse cuando el volumen de operaciones lo justifique.
+</div>
+
+<div class="legend">
+  <div class="li"><div class="ld" style="background:#1B3A6B"></div> Dirección General</div>
+  <div class="li"><div class="ld" style="background:#2E5FA3"></div> Área Comercial</div>
+  <div class="li"><div class="ld" style="background:#4A90D9"></div> Área de Operaciones y Crédito</div>
+  <div class="li"><div class="ld" style="background:#1E7FAB"></div> Área Administrativa y Financiera</div>
+  <div class="li"><div class="ld" style="border:2px dashed #aaa;background:#fff"></div> Servicios externos / tercerizados</div>
+</div>
+
+</body>
+</html>
