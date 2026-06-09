@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diagrama de Flujo — Créditos Prendarios · Credicash</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: Arial, sans-serif; background: #EEF2F8; padding: 36px 24px; min-width: 960px; }
+
+h1 { text-align: center; color: #1B3A6B; font-size: 20px; margin-bottom: 4px; letter-spacing: 1px; }
+p.sub { text-align: center; color: #777; font-size: 11px; margin-bottom: 32px; }
+
+.flow { display: flex; flex-direction: column; align-items: center; }
+
+/* ETAPA PRINCIPAL */
+.etapa {
+  width: 900px; display: flex; align-items: stretch;
+  border-radius: 10px; overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+}
+.etapa-num {
+  width: 72px; flex-shrink: 0; display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  font-size: 24px; font-weight: bold; color: #fff; padding: 16px 0;
+}
+.etapa-num span { font-size: 10px; font-weight: normal; letter-spacing: 1px; opacity: 0.8; margin-top: 2px; }
+.etapa-body { flex: 1; padding: 14px 16px; background: #fff; }
+.etapa-title { font-size: 13px; font-weight: bold; color: #1B3A6B; margin-bottom: 2px; }
+.etapa-resp { font-size: 10px; color: #888; margin-bottom: 4px; font-style: italic; }
+.etapa-freq { font-size: 9.5px; font-weight: bold; color: #fff; border-radius: 3px; padding: 1px 7px; display: inline-block; margin-bottom: 8px; }
+.etapa-steps { display: flex; flex-wrap: wrap; gap: 5px; }
+.pill { font-size: 10px; background: #EEF2F8; color: #333; border-radius: 4px; padding: 3px 8px; border-left: 3px solid #ccc; }
+
+/* Columna de datos */
+.etapa-data { width: 230px; flex-shrink: 0; background: #F8FAFD; border-left: 1px solid #E0E8F4; padding: 12px 13px; }
+.data-title { font-size: 9px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.6px; color: #2E5FA3; margin-bottom: 6px; }
+.data-item { font-size: 9.5px; color: #555; margin-bottom: 3px; padding-left: 7px; border-left: 2px solid #B3C8F0; line-height: 1.3; }
+
+/* Sub-etapa */
+.sub-etapa {
+  width: 900px; display: flex; align-items: stretch;
+  border-radius: 8px; overflow: hidden;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.08);
+  border-left: 5px solid #ccc;
+}
+.sub-label {
+  width: 72px; flex-shrink: 0; display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  font-size: 18px; font-weight: bold; color: #fff; padding: 12px 0;
+}
+.sub-label span { font-size: 9px; font-weight: normal; letter-spacing: 1px; opacity: 0.8; margin-top: 2px; }
+
+/* Rechazo */
+.rechazo { background: #FFF3E0; border: 1px solid #FFB74D; border-radius: 6px; padding: 7px 12px; margin-top: 8px; }
+.rechazo-title { font-size: 9.5px; font-weight: bold; color: #E65100; margin-bottom: 4px; }
+.rechazo-item { font-size: 9.5px; color: #555; margin-bottom: 2px; padding-left: 8px; }
+
+/* Flecha */
+.arrow { width: 2px; height: 20px; background: #2E5FA3; margin: 0 auto; position: relative; }
+.arrow::after { content: ''; position: absolute; bottom: -6px; left: 50%; transform: translateX(-50%); border-left: 6px solid transparent; border-right: 6px solid transparent; border-top: 7px solid #2E5FA3; }
+.arrow-sub { width: 2px; height: 12px; background: #4A90D9; margin: 0 auto; position: relative; }
+.arrow-sub::after { content: ''; position: absolute; bottom: -5px; left: 50%; transform: translateX(-50%); border-left: 5px solid transparent; border-right: 5px solid transparent; border-top: 6px solid #4A90D9; }
+
+/* Nota caja */
+.nota { width: 900px; background: #E8F4FD; border: 1px solid #B3D4F0; border-radius: 8px; padding: 10px 16px; margin-top: 6px; }
+.nota-title { font-size: 10px; font-weight: bold; color: #1B3A6B; margin-bottom: 4px; }
+.nota-item { font-size: 9.5px; color: #444; margin-bottom: 2px; padding-left: 8px; }
+
+/* ABM */
+.abm-section { width: 900px; margin-top: 32px; display: flex; gap: 14px; }
+.abm-box { flex: 1; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 6px rgba(0,0,0,0.08); }
+.abm-header { background: #1B3A6B; color: #fff; font-size: 11.5px; font-weight: bold; padding: 9px 13px; }
+.abm-body { background: #fff; padding: 10px 13px; }
+.abm-item { font-size: 10px; color: #444; margin-bottom: 4px; padding-left: 9px; border-left: 3px solid #B3C8F0; line-height: 1.3; }
+
+/* Leyenda */
+.legend { width: 900px; margin-top: 28px; display: flex; gap: 18px; flex-wrap: wrap; padding-top: 16px; border-top: 1px solid #cdd8e8; justify-content: center; }
+.li { display: flex; align-items: center; gap: 6px; font-size: 11px; color: #555; }
+.ld { width: 13px; height: 13px; border-radius: 3px; flex-shrink: 0; }
+
+/* Colores */
+.c1a { background: #1B3A6B; } .freq-1a { background: #1B3A6B; }
+.c1b { background: #2E5FA3; } .freq-1b { background: #2E5FA3; }
+.c2a { background: #2E5FA3; } .freq-2a { background: #2E5FA3; }
+.c2b { background: #3A72B8; } .freq-2b { background: #3A72B8; }
+.c3  { background: #2E5FA3; } .freq-3  { background: #2E5FA3; }
+.c4  { background: #1B5E3B; } .freq-4  { background: #1B5E3B; }
+.c5  { background: #4A7AB5; } .freq-5  { background: #4A7AB5; }
+.c6  { background: #1E7FAB; } .freq-6  { background: #1E7FAB; }
+
+.pill-1 { border-color: #1B3A6B; }
+.pill-2 { border-color: #2E5FA3; }
+.pill-3 { border-color: #3A72B8; }
+.pill-4 { border-color: #1B5E3B; }
+.pill-5 { border-color: #4A7AB5; }
+.pill-6 { border-color: #1E7FAB; }
+</style>
+</head>
+<body>
+
+<h1>DIAGRAMA DE FLUJO — CRÉDITOS PRENDARIOS</h1>
+<p class="sub">Del alta del comercio a la cobranza · Credicash · Junio 2026 · V3</p>
+
+<div class="flow">
+
+  <!-- ══ ETAPA 1A ══ -->
+  <div class="sub-etapa" style="border-left-color:#1B3A6B;">
+    <div class="sub-label c1a">1A<span>ETAPA</span></div>
+    <div class="etapa-body">
+      <div class="etapa-title">ALTA DEL COMERCIO ADHERIDO</div>
+      <div class="etapa-resp">Andrés Busquets — Área Comercial</div>
+      <span class="etapa-freq freq-1a">Por única vez por agencia</span>
+      <div class="etapa-steps">
+        <div class="pill pill-1">Razón social, CUIT, CBU/CVU</div>
+        <div class="pill pill-1">Domicilio y contacto comercial</div>
+        <div class="pill pill-1">Personas autorizadas a gestionar pedidos</div>
+        <div class="pill pill-1">Condiciones y comisión pactada</div>
+        <div class="pill pill-1">Canales habilitados: WhatsApp / credicashprendarios@castillo.com.ar / web</div>
+      </div>
+    </div>
+    <div class="etapa-data">
+      <div class="data-title">Datos a registrar</div>
+      <div class="data-item">Razón social y CUIT</div>
+      <div class="data-item">CBU / CVU</div>
+      <div class="data-item">Contacto y autorizados</div>
+      <div class="data-item">Condiciones y comisión</div>
+      <div class="data-item">Canales habilitados</div>
+    </div>
+  </div>
+
+  <div class="arrow-sub"></div>
+
+  <!-- ══ ETAPA 1B ══ -->
+  <div class="sub-etapa" style="border-left-color:#2E5FA3;">
+    <div class="sub-label c1b">1B<span>ETAPA</span></div>
+    <div class="etapa-body">
+      <div class="etapa-title">ALTA DE VEHÍCULOS DEL STOCK + INFORME DE DOMINIO DNRPA</div>
+      <div class="etapa-resp">Adrián — Área Administrativa</div>
+      <span class="etapa-freq freq-1b">Por única vez por vehículo · Se actualiza ante cambios de stock</span>
+      <div class="etapa-steps">
+        <div class="pill pill-2">Carga de datos del vehículo (marca, modelo, año, dominio, chasis)</div>
+        <div class="pill pill-2">Precio de venta (referencia) y Valor de Revista (base de cálculo)</div>
+        <div class="pill pill-2">Solicitud de informe de dominio DNRPA</div>
+        <div class="pill pill-2">Tasación del vehículo</div>
+        <div class="pill pill-2">Registro de resultado: habilitado / rechazado</div>
+      </div>
+      <div class="rechazo">
+        <div class="rechazo-title">⚠ Criterios de rechazo del vehículo en esta etapa:</div>
+        <div class="rechazo-item">• Prenda vigente o inhibición judicial activa</div>
+        <div class="rechazo-item">• Antigüedad superior al máximo definido</div>
+        <div class="rechazo-item">• Deuda de patentes o multas sin regularizar</div>
+        <div class="rechazo-item">• Valor de Revista por debajo del mínimo operable</div>
+      </div>
+    </div>
+    <div class="etapa-data">
+      <div class="data-title">Datos a registrar</div>
+      <div class="data-item">Marca, modelo, año, dominio, chasis</div>
+      <div class="data-item">Precio de venta</div>
+      <div class="data-item">Valor de Revista</div>
+      <div class="data-item">Resultado informe DNRPA</div>
+      <div class="data-item">Fecha solicitud y resultado</div>
+      <div class="data-item">Observaciones</div>
+      <div class="data-item">Estado: habilitado / rechazado</div>
+    </div>
+  </div>
+
+  <div class="arrow"></div>
+
+  <!-- ══ ETAPA 2A ══ -->
+  <div class="sub-etapa" style="border-left-color:#2E5FA3;">
+    <div class="sub-label c2a">2A<span>ETAPA</span></div>
+    <div class="etapa-body">
+      <div class="etapa-title">RECEPCIÓN Y VERIFICACIÓN DOCUMENTAL DEL CLIENTE</div>
+      <div class="etapa-resp">Adrián — Área Administrativa</div>
+      <span class="etapa-freq freq-2a">Por cada pedido de crédito</span>
+      <div class="etapa-steps">
+        <div class="pill pill-2">DNI + teléfono + email del cliente</div>
+        <div class="pill pill-2">Comprobante de domicilio (boleta de servicios — máx. 3 meses)</div>
+        <div class="pill pill-2">Justificación de ingresos (recibo sueldo / constancia AFIP-MT)</div>
+        <div class="pill pill-2">Vehículo solicitado (vinculación con stock habilitado en 1B)</div>
+        <div class="pill pill-2">Monto solicitado y cantidad de cuotas deseada</div>
+        <div class="pill pill-2">Verificación del checklist completo</div>
+      </div>
+      <div class="rechazo">
+        <div class="rechazo-title">⚠ Criterios de rechazo en esta etapa:</div>
+        <div class="rechazo-item">• Documentación incompleta luego de 2 solicitudes</div>
+        <div class="rechazo-item">• Vehículo no habilitado o rechazado en Etapa 1B</div>
+      </div>
+    </div>
+    <div class="etapa-data">
+      <div class="data-title">Datos a registrar</div>
+      <div class="data-item">Canal y fecha de la solicitud</div>
+      <div class="data-item">DNI, teléfono y email</div>
+      <div class="data-item">Comprobante domicilio</div>
+      <div class="data-item">Justificación de ingresos</div>
+      <div class="data-item">Vehículo solicitado</div>
+      <div class="data-item">Monto y cuotas solicitadas</div>
+    </div>
+  </div>
+
+  <div class="arrow-sub"></div>
+
+  <!-- ══ ETAPA 2B ══ -->
+  <div class="sub-etapa" style="border-left-color:#3A72B8;">
+    <div class="sub-label c2b">2B<span>ETAPA</span></div>
+    <div class="etapa-body">
+      <div class="etapa-title">ANÁLISIS CREDITICIO Y DECISIÓN</div>
+      <div class="etapa-resp">José Díaz — Análisis Crediticio</div>
+      <span class="etapa-freq freq-2b">Por cada pedido de crédito</span>
+      <div class="etapa-steps">
+        <div class="pill pill-2">Consulta Veraz / Nosis del cliente</div>
+        <div class="pill pill-2">Evaluación de ingresos demostrables</div>
+        <div class="pill pill-2">Cálculo relación cuota / ingreso (%)</div>
+        <div class="pill pill-2">Monto máximo sobre Valor de Revista del vehículo</div>
+        <div class="pill pill-2">Decisión: aprobado / con condiciones / rechazado</div>
+      </div>
+    </div>
+    <div class="etapa-data">
+      <div class="data-title">Datos a registrar</div>
+      <div class="data-item">Resultado Veraz / Nosis</div>
+      <div class="data-item">Ingreso neto mensual</div>
+      <div class="data-item">Relación cuota / ingreso (%)</div>
+      <div class="data-item">Monto máximo calculado</div>
+      <div class="data-item">Monto aprobado definitivo</div>
+      <div class="data-item">Decisión y fecha</div>
+    </div>
+  </div>
+
+  <div class="arrow"></div>
+
+  <!-- ══ ETAPA 3 ══ -->
+  <div class="etapa">
+    <div class="etapa-num c3">3<span>ETAPA</span></div>
+    <div class="etapa-body">
+      <div class="etapa-title">CONFIRMACIÓN DEL OTORGAMIENTO A LA AGENCIA</div>
+      <div class="etapa-resp">Andrés Busquets — Área Comercial</div>
+      <span class="etapa-freq freq-3">Por cada operación aprobada</span>
+      <div class="etapa-steps">
+        <div class="pill pill-2">Envío de propuesta formal a la agencia</div>
+        <div class="pill pill-2">Cuota = capital + intereses + otorgamiento + patentamiento + seguro RC Completo</div>
+        <div class="pill pill-2">TNA / TEA / CFT (Ley 24.240)</div>
+        <div class="pill pill-2">Plazo en meses (cuotas preestablecidas)</div>
+        <div class="pill pill-2">Confirmación de aceptación (48 hs hábiles)</div>
+        <div class="pill pill-2">Coordinación de turno presencial</div>
+      </div>
+    </div>
+    <div class="etapa-data">
+      <div class="data-title">Datos a registrar</div>
+      <div class="data-item">TNA / TEA / CFT</div>
+      <div class="data-item">Cuota mensual (composición completa)</div>
+      <div class="data-item">Plazo en meses</div>
+      <div class="data-item">Fecha de envío y aceptación</div>
+      <div class="data-item">Fecha del turno presencial</div>
+    </div>
+  </div>
+
+  <div class="arrow"></div>
+
+  <!-- ══ ETAPA 4 ══ -->
+  <div class="etapa">
+    <div class="etapa-num c4">4<span>ETAPA</span></div>
+    <div class="etapa-body">
+      <div class="etapa-title">VISITA DEL CLIENTE, FIRMA Y GESTORÍA REGISTRAL</div>
+      <div class="etapa-resp">José Díaz / Adrián + Gestor Automotor — Presencial</div>
+      <span class="etapa-freq freq-4">Por cada operación</span>
+      <div class="etapa-steps">
+        <div class="pill pill-4">Alta del cliente en Griba (cuenta corriente)</div>
+        <div class="pill pill-4">Firma Contrato de Préstamo</div>
+        <div class="pill pill-4">Firma Contrato Prendario — Ley 12.962 (firmas certificadas)</div>
+        <div class="pill pill-4">F03 DNRPA — inscripción de prenda en el Registro (gestor automotor)</div>
+        <div class="pill pill-4">Libre deuda de multas e impuesto automotor</div>
+        <div class="pill pill-4">Formulario 12 — Verificación policial (autos usados)</div>
+        <div class="pill pill-4">Póliza de seguro RC Completo con endoso a favor de Credicash</div>
+        <div class="pill pill-4">Armado y control: ~48 hs · Inscripción registral: ~48 hs</div>
+      </div>
+      <div class="nota" style="margin-top:8px; background:#E8F5E9; border-color:#A5D6A7;">
+        <div class="nota-title" style="color:#1B5E3B;">Contrato prendario ≠ F03 DNRPA</div>
+        <div class="nota-item">El <strong>contrato prendario</strong> es el documento legal (Ley 12.962) firmado por ambas partes.</div>
+        <div class="nota-item">El <strong>F03</strong> es el formulario de la DNRPA que el gestor presenta en el Registro para inscribir la prenda.</div>
+      </div>
+    </div>
+    <div class="etapa-data">
+      <div class="data-title">Datos a registrar</div>
+      <div class="data-item">Datos cliente en Griba</div>
+      <div class="data-item">Datos auto prendado</div>
+      <div class="data-item">Agencia vinculada</div>
+      <div class="data-item">N° contrato préstamo</div>
+      <div class="data-item">N° y vigencia póliza seguro</div>
+      <div class="data-item">Libre deuda confirmada</div>
+      <div class="data-item">Fecha de firma</div>
+      <div class="data-item">Gestor asignado</div>
+      <div class="data-item">Estado inscripción F03</div>
+      <div class="data-item">Fecha inscripción confirmada</div>
+    </div>
+  </div>
+
+  <div class="arrow"></div>
+
+  <!-- ══ ETAPA 5 ══ -->
+  <div class="etapa">
+    <div class="etapa-num c5">5<span>ETAPA</span></div>
+    <div class="etapa-body">
+      <div class="etapa-title">LIQUIDACIÓN DEL PRÉSTAMO — PAGO A LA AGENCIA (EFECTIVO)</div>
+      <div class="etapa-resp">Patricia — Liquidación</div>
+      <span class="etapa-freq freq-5">Por cada operación</span>
+      <div class="etapa-steps">
+        <div class="pill pill-5">Verificación de requisitos cumplidos</div>
+        <div class="pill pill-5">Pago en efectivo por caja (herramienta Griba actual)</div>
+        <div class="pill pill-5">Firma del autorizado que retira el efectivo</div>
+        <div class="pill pill-5">Emisión de comprobante de pago</div>
+        <div class="pill pill-5">Verificación de cuotas impactadas en Griba</div>
+        <div class="pill pill-5">Liquidación de comisión a la agencia (si aplica)</div>
+      </div>
+    </div>
+    <div class="etapa-data">
+      <div class="data-title">Datos a registrar</div>
+      <div class="data-item">Monto desembolsado</div>
+      <div class="data-item">Fecha de pago</div>
+      <div class="data-item">N° de comprobante</div>
+      <div class="data-item">Autorizado que retiró</div>
+      <div class="data-item">Comisión liquidada</div>
+      <div class="data-item">Cuotas verificadas en Griba</div>
+    </div>
+  </div>
+
+  <div class="arrow"></div>
+
+  <!-- ══ ETAPA 6 ══ -->
+  <div class="etapa">
+    <div class="etapa-num c6">6<span>ETAPA</span></div>
+    <div class="etapa-body">
+      <div class="etapa-title">LEGAJO DIGITAL Y SEGUIMIENTO DEL CRÉDITO</div>
+      <div class="etapa-resp">Sebastián (carga y seguimiento) + CYC (mora)</div>
+      <span class="etapa-freq freq-6">Durante toda la vida del crédito</span>
+      <div class="etapa-steps">
+        <div class="pill pill-6">Cuotas cargadas en Griba (igual que préstamos actuales)</div>
+        <div class="pill pill-6">Débito mensual seguro RC Completo</div>
+        <div class="pill pill-6">Seguimiento de pagos y mora — circuito CYC existente</div>
+        <div class="pill pill-6">Renovación anual de póliza con endoso</div>
+        <div class="pill pill-6">Legajo digital en Google Drive (carpeta por cliente)</div>
+        <div class="pill pill-6">Cancelación → levantamiento de prenda en Registro DNRPA</div>
+      </div>
+    </div>
+    <div class="etapa-data">
+      <div class="data-title">Datos a registrar</div>
+      <div class="data-item">Cuotas en Griba (monto, vencimiento, estado)</div>
+      <div class="data-item">Pago de cada cuota</div>
+      <div class="data-item">Días de mora</div>
+      <div class="data-item">Débito seguro mensual</div>
+      <div class="data-item">Renovación anual póliza</div>
+      <div class="data-item">Estado prenda DNRPA</div>
+      <div class="data-item">Fecha cancelación total</div>
+      <div class="data-item">Comprobante levantamiento</div>
+    </div>
+  </div>
+
+  <!-- ABM -->
+  <div class="abm-section">
+    <div class="abm-box">
+      <div class="abm-header">ABM — COMERCIOS ADHERIDOS</div>
+      <div class="abm-body">
+        <div class="abm-item">Alta: razón social, CUIT, CBU, contacto, canales, condiciones y comisión pactada</div>
+        <div class="abm-item">Stock de vehículos: carga inicial + actualización ante ingresos/egresos</div>
+        <div class="abm-item">Baja: desactivación (sin eliminar historial de operaciones)</div>
+        <div class="abm-item">Consulta: créditos otorgados por agencia, comisiones liquidadas</div>
+      </div>
+    </div>
+    <div class="abm-box">
+      <div class="abm-header">ABM — AUTORIZADOS A COBRAR</div>
+      <div class="abm-body">
+        <div class="abm-item">Alta: nombre, DNI, cargo y agencia a la que pertenece</div>
+        <div class="abm-item">Canal habilitado para gestionar solicitudes de crédito</div>
+        <div class="abm-item">Baja: desactivación (sin eliminar historial)</div>
+        <div class="abm-item">Vinculación: cada autorizado ligado a una agencia específica</div>
+      </div>
+    </div>
+    <div class="abm-box">
+      <div class="abm-header">ELEMENTOS DE SOPORTE</div>
+      <div class="abm-body">
+        <div class="abm-item">Legajo digital por operación — Google Drive (carpeta por cliente/agencia)</div>
+        <div class="abm-item">Planilla complementaria: datos del auto prendado y agencia (hasta módulo Griba)</div>
+        <div class="abm-item">Gestores automotor: mínimo 3 según zona de radicación del vehículo (DNRPA)</div>
+        <div class="abm-item">Mora: circuito CYC existente — sin proceso nuevo a crear</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LEYENDA -->
+  <div class="legend">
+    <div class="li"><div class="ld" style="background:#1B3A6B"></div> Etapa 1A — Alta del comercio (Andrés)</div>
+    <div class="li"><div class="ld" style="background:#2E5FA3"></div> Etapas 1B / 2A — Sin cliente (Adrián)</div>
+    <div class="li"><div class="ld" style="background:#3A72B8"></div> Etapa 2B — Análisis crediticio (José Díaz)</div>
+    <div class="li"><div class="ld" style="background:#1B5E3B"></div> Etapa 4 — Firma y gestoría registral</div>
+    <div class="li"><div class="ld" style="background:#4A7AB5"></div> Etapa 5 — Liquidación (Patricia)</div>
+    <div class="li"><div class="ld" style="background:#1E7FAB"></div> Etapa 6 — Seguimiento (Sebastián + CYC)</div>
+  </div>
+
+</div>
+</body>
+</html>
